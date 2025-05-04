@@ -18,21 +18,48 @@ export default function HomePage() {
     queryKey: ['/api/assessment'],
   });
 
-  const { data: guidance, isLoading: guidanceLoading, error: guidanceError } = useQuery({
+  // Define the types for our data
+  interface Guidance {
+    id: number;
+    content: string;
+    codeExample?: {
+      title: string;
+      code: string;
+      language: string;
+    };
+  }
+
+  interface Resource {
+    id: number;
+    type: string;
+    title: string;
+    description: string;
+    duration?: string;
+    level?: string;
+    imageUrl?: string;
+    link: string;
+  }
+
+  interface ProgressItem {
+    name: string;
+    percentage: number;
+  }
+
+  const { data: guidance, isLoading: guidanceLoading, error: guidanceError } = useQuery<Guidance>({
     queryKey: ['/api/guidance'],
     enabled: !!assessment,
     retry: 2,
     retryDelay: 1000,
   });
 
-  const { data: resources, isLoading: resourcesLoading } = useQuery({
+  const { data: resources, isLoading: resourcesLoading } = useQuery<Resource[]>({
     queryKey: ['/api/resources'],
     enabled: !!assessment,
     retry: 2,
     retryDelay: 1000,
   });
 
-  const { data: progress, isLoading: progressLoading } = useQuery({
+  const { data: progress, isLoading: progressLoading } = useQuery<ProgressItem[]>({
     queryKey: ['/api/progress'],
     enabled: !!assessment,
     retry: 2,
@@ -150,7 +177,14 @@ export default function HomePage() {
                     Refresh Page
                   </button>
                 </div>
-              ) : null}
+              ) : (
+                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+                  <h3 className="text-lg font-medium text-gray-900">Loading Guidance...</h3>
+                  <p className="mt-2 text-gray-600">
+                    Your personalized learning guidance is being prepared. Please wait a moment.
+                  </p>
+                </div>
+              )}
 
               {/* Resource Recommendations */}
               {resources && resources.length > 0 ? (
@@ -159,7 +193,7 @@ export default function HomePage() {
                     <ResourceCard key={index} resource={resource} />
                   ))}
                 </div>
-              ) : resources && resources.length === 0 ? (
+              ) : (
                 <div className="bg-white p-6 rounded-lg shadow-md mb-6">
                   <h3 className="text-lg font-medium text-gray-900">Learning Resources</h3>
                   <p className="mt-2 text-gray-600">
@@ -167,12 +201,12 @@ export default function HomePage() {
                     Try refreshing your guidance to see recommended resources.
                   </p>
                 </div>
-              ) : null}
+              )}
 
               {/* Progress Tracking */}
               {progress && progress.length > 0 ? (
                 <ProgressCard progress={progress} />
-              ) : progress && progress.length === 0 ? (
+              ) : (
                 <div className="bg-white p-6 rounded-lg shadow-md mb-6">
                   <h3 className="text-lg font-medium text-gray-900">Your Learning Progress</h3>
                   <p className="mt-2 text-gray-600">
@@ -180,7 +214,7 @@ export default function HomePage() {
                     Check back soon to see your progress!
                   </p>
                 </div>
-              ) : null}
+              )}
             </div>
           )}
         </main>
