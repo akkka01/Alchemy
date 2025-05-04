@@ -13,13 +13,14 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    --primary: 221.2 83.2% 53.3%;
+    /* Custom ALCHEMY color scheme - Purple and gold theme */
+    --primary: 265 89% 47%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 159 64% 35%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 45 93% 47%;
+    --secondary-foreground: 0 0% 20%;
 
-    --accent: 266 87% 60%;
+    --accent: 288 85% 60%;
     --accent-foreground: 210 40% 98%;
 
     --muted: 240 4.8% 95.9%;
@@ -45,13 +46,14 @@
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 210 40% 98%;
+    /* Dark theme for ALCHEMY */
+    --primary: 265 80% 60%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 150 69% 31%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 45 95% 55%;
+    --secondary-foreground: 0 0% 10%;
 
-    --accent: 262 83% 58%;
+    --accent: 288 70% 50%;
     --accent-foreground: 0 0% 98%;
 
     --muted: 240 3.7% 15.9%;

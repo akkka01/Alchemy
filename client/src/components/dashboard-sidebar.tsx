@@ -9,9 +9,11 @@ export function DashboardSidebar({ user, onLogout }: DashboardSidebarProps) {
   return (
     <aside className="hidden md:flex md:flex-col md:w-64 bg-white border-r border-gray-200">
       <div className="p-4 border-b border-gray-200">
-        <div className="flex items-center">
-          <i className="ri-code-box-line text-2xl text-primary-500 mr-2"></i>
-          <h1 className="text-xl font-semibold text-gray-900">CodeMentor AI</h1>
+        <div className="flex items-center justify-center">
+          <div className="flex items-center p-2">
+            <i className="ri-flask-fill text-3xl text-primary-600 mr-2"></i>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text">ALCHEMY</h1>
+          </div>
         </div>
       </div>
       <nav className="flex-1 px-2 py-4 space-y-1">
