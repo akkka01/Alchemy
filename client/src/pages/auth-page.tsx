@@ -64,16 +64,18 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-gray-50 via-purple-50 to-indigo-50">
       <div className="max-w-md w-full space-y-8">
-        <Card className="shadow-lg rounded-xl">
+        <Card className="shadow-xl rounded-xl overflow-hidden border-t-4 border-t-primary-500">
           <CardContent className="p-6 sm:p-8">
-            <div className="text-center mb-6">
-              <div className="flex justify-center mb-2">
-                <i className="ri-code-box-line text-5xl text-primary-500"></i>
+            <div className="text-center mb-8">
+              <div className="flex justify-center mb-3">
+                <div className="bg-gradient-to-br from-primary-500 to-accent-500 p-4 rounded-2xl shadow-lg">
+                  <i className="ri-flask-fill text-4xl text-white"></i>
+                </div>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">CodeMentor AI</h1>
-              <p className="text-gray-600 mt-1">Your personalized coding companion</p>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 text-transparent bg-clip-text mb-2">ALCHEMY</h1>
+              <p className="text-gray-600 text-lg">Transform your coding journey</p>
             </div>
 
             {/* Auth Tabs */}
@@ -137,7 +139,7 @@ export default function AuthPage() {
                   />
                   <Button 
                     type="submit" 
-                    className="w-full" 
+                    className="w-full bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 transition-all duration-300" 
                     disabled={loginMutation.isPending}
                   >
                     {loginMutation.isPending ? (
@@ -188,7 +190,7 @@ export default function AuthPage() {
                   />
                   <Button 
                     type="submit" 
-                    className="w-full" 
+                    className="w-full bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 transition-all duration-300" 
                     disabled={registerMutation.isPending}
                   >
                     {registerMutation.isPending ? (
@@ -215,12 +217,12 @@ export default function AuthPage() {
                 </div>
               </div>
               <div className="mt-6 grid grid-cols-2 gap-3">
-                <Button variant="outline" className="w-full">
-                  <i className="ri-github-fill text-lg mr-2"></i>
+                <Button variant="outline" className="w-full hover:bg-slate-100 border-gray-300 transition-all duration-300">
+                  <i className="ri-github-fill text-xl mr-2 text-slate-800"></i>
                   GitHub
                 </Button>
-                <Button variant="outline" className="w-full">
-                  <i className="ri-google-fill text-lg mr-2"></i>
+                <Button variant="outline" className="w-full hover:bg-red-50 border-gray-300 transition-all duration-300">
+                  <i className="ri-google-fill text-xl mr-2 text-red-500"></i>
                   Google
                 </Button>
               </div>
