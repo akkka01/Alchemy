@@ -18,19 +18,25 @@ export default function HomePage() {
     queryKey: ['/api/assessment'],
   });
 
-  const { data: guidance, isLoading: guidanceLoading } = useQuery({
+  const { data: guidance, isLoading: guidanceLoading, error: guidanceError } = useQuery({
     queryKey: ['/api/guidance'],
     enabled: !!assessment,
+    retry: 2,
+    retryDelay: 1000,
   });
 
   const { data: resources, isLoading: resourcesLoading } = useQuery({
     queryKey: ['/api/resources'],
     enabled: !!assessment,
+    retry: 2,
+    retryDelay: 1000,
   });
 
   const { data: progress, isLoading: progressLoading } = useQuery({
     queryKey: ['/api/progress'],
     enabled: !!assessment,
+    retry: 2,
+    retryDelay: 1000,
   });
 
   // If no assessment exists, redirect to assessment page
@@ -128,21 +134,53 @@ export default function HomePage() {
               </div>
 
               {/* AI Guidance */}
-              {guidance && <GuidanceCard guidance={guidance} />}
+              {guidance ? (
+                <GuidanceCard guidance={guidance} />
+              ) : guidanceError ? (
+                <div className="bg-white p-6 rounded-lg shadow-md mb-6 border-l-4 border-amber-500">
+                  <h3 className="text-lg font-medium text-gray-900">Personalized Guidance Unavailable</h3>
+                  <p className="mt-2 text-gray-600">
+                    We're currently experiencing issues generating your personalized guidance.
+                    Please try refreshing the page or check back later.
+                  </p>
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="mt-4 px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors"
+                  >
+                    Refresh Page
+                  </button>
+                </div>
+              ) : null}
 
               {/* Resource Recommendations */}
-              {resources && resources.length > 0 && (
+              {resources && resources.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   {resources.map((resource, index) => (
                     <ResourceCard key={index} resource={resource} />
                   ))}
                 </div>
-              )}
+              ) : resources && resources.length === 0 ? (
+                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+                  <h3 className="text-lg font-medium text-gray-900">Learning Resources</h3>
+                  <p className="mt-2 text-gray-600">
+                    Personalized learning resources will appear here once they're generated.
+                    Try refreshing your guidance to see recommended resources.
+                  </p>
+                </div>
+              ) : null}
 
               {/* Progress Tracking */}
-              {progress && progress.length > 0 && (
+              {progress && progress.length > 0 ? (
                 <ProgressCard progress={progress} />
-              )}
+              ) : progress && progress.length === 0 ? (
+                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+                  <h3 className="text-lg font-medium text-gray-900">Your Learning Progress</h3>
+                  <p className="mt-2 text-gray-600">
+                    Your learning progress will be tracked here as you advance through your personalized path.
+                    Check back soon to see your progress!
+                  </p>
+                </div>
+              ) : null}
             </div>
           )}
         </main>

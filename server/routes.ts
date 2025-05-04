@@ -73,10 +73,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     
     try {
-      const guidance = await storage.getGuidanceByUserId(req.user.id);
+      // First check if guidance exists for this user
+      let guidance = await storage.getGuidanceByUserId(req.user.id);
+      
+      // If no guidance exists, try to generate it based on the user's assessment
       if (!guidance) {
-        return res.status(404).json({ error: "Guidance not found" });
+        const assessment = await storage.getAssessmentByUserId(req.user.id);
+        if (assessment) {
+          try {
+            // Use the fallback generation directly since this is a recovery path
+            const generatedGuidance = await generateGuidance(req.user.id, assessment);
+            guidance = generatedGuidance;
+          } catch (genError) {
+            console.error("Error generating guidance in recovery path:", genError);
+            return res.status(500).json({ error: "Failed to generate guidance" });
+          }
+        } else {
+          return res.status(404).json({ error: "Assessment not found, cannot generate guidance" });
+        }
       }
+      
       return res.json(guidance);
     } catch (error) {
       console.error("Error fetching guidance:", error);
@@ -94,10 +110,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Assessment not found" });
       }
       
-      // Generate new guidance based on existing assessment
-      const guidance = await generateGuidance(req.user.id, assessment);
-      
-      return res.json(guidance);
+      try {
+        // Generate new guidance based on existing assessment
+        const guidance = await generateGuidance(req.user.id, assessment);
+        return res.json(guidance);
+      } catch (genError) {
+        console.error("Error generating guidance in refresh:", genError);
+        
+        // Check if we already have guidance, if so, return it instead of failing
+        const existingGuidance = await storage.getGuidanceByUserId(req.user.id);
+        if (existingGuidance) {
+          return res.json(existingGuidance);
+        } else {
+          return res.status(500).json({ error: "Failed to refresh guidance" });
+        }
+      }
     } catch (error) {
       console.error("Error refreshing guidance:", error);
       return res.status(500).json({ error: "Failed to refresh guidance" });
