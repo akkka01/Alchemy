@@ -25,22 +25,47 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         return 'Try Challenge';
       case 'documentation':
         return 'View Docs';
+      case 'video':
+        return 'Watch Video';
       default:
         return 'View Resource';
     }
   };
 
   const getButtonClass = (type: string) => {
-    return type === 'challenge' ? 'bg-secondary-600 hover:bg-secondary-700' : '';
+    if (type === 'challenge') {
+      return 'bg-secondary-600 hover:bg-secondary-700';
+    } else if (type === 'video') {
+      return 'bg-red-600 hover:bg-red-700';
+    }
+    return '';
+  };
+  
+  const getIcon = (type: string) => {
+    switch (type) {
+      case 'course':
+        return 'ri-book-open-line';
+      case 'challenge':
+        return 'ri-code-box-line';
+      case 'documentation':
+        return 'ri-file-text-line';
+      case 'video':
+        return 'ri-video-line';
+      default:
+        return 'ri-link';
+    }
   };
 
   return (
     <Card className="shadow-md rounded-lg overflow-hidden">
       <div className="p-4 border-b border-gray-200">
-        <h3 className="font-medium text-gray-900">{resource.type === 'course' ? 'Recommended Course' : 
-          resource.type === 'challenge' ? 'Practice Challenge' : 
-          resource.type === 'documentation' ? 'Key Documentation' : 
-          'Resource'}</h3>
+        <h3 className="font-medium text-gray-900">
+          {resource.type === 'course' ? 'Recommended Course' : 
+           resource.type === 'challenge' ? 'Practice Challenge' : 
+           resource.type === 'documentation' ? 'Key Documentation' : 
+           resource.type === 'video' ? 'Video Tutorial' :
+           'Resource'}
+        </h3>
       </div>
       <div className="p-4">
         {resource.type !== 'documentation' && (

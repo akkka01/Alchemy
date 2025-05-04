@@ -146,15 +146,93 @@ async function generateFallbackGuidance(userId: number, assessment: any): Promis
   const level = assessment.experienceLevel.toLowerCase().includes("beginner") ? "beginner" : 
                assessment.experienceLevel.toLowerCase().includes("intermediate") ? "intermediate" : "advanced";
   
-  // Create a basic guidance content based on assessment data
+  // Create a more comprehensive and personalized guidance content based on assessment data
   let content = `**Welcome to your personalized learning journey!**\n\n`;
-  content += `Based on your assessment, we've identified that you're at the ${assessment.experienceLevel} level `;
-  content += `and want to focus on ${assessment.learningGoal}.\n\n`;
-  content += `We recommend starting with the following learning path:\n\n`;
-  content += `- Build a strong foundation in ${language}\n`;
-  content += `- Practice with small projects that align with your learning goals\n`;
-  content += `- Commit to a consistent learning schedule (${assessment.timeCommitment})\n\n`;
-  content += `Following your preferred ${assessment.learningStyle} learning style will help you progress effectively.`;
+  content += `Based on your assessment, we've identified that you're at the **${assessment.experienceLevel}** level `;
+  content += `and want to focus on **${assessment.learningGoal}**. Given your preference for a ${assessment.learningStyle.toLowerCase()} learning style and `;
+  content += `${assessment.timeCommitment.toLowerCase()} time commitment, we've created a tailored plan for you.\n\n`;
+  
+  content += `### Personalized Learning Path\n\n`;
+  
+  // Add beginner-specific advice
+  if (level === "beginner") {
+    content += `**Getting Started with ${language}**\n\n`;
+    content += `As a beginner, it's important to build a solid foundation in ${language} fundamentals:\n\n`;
+    content += `1. **Learn the syntax and basic concepts** - Start with variables, data types, and control structures\n`;
+    content += `2. **Master functions and basic algorithms** - Practice writing reusable code and solving simple problems\n`;
+    content += `3. **Understand error handling** - Learn to debug and troubleshoot common issues\n`;
+    content += `4. **Build small projects** - Apply what you've learned to create simple applications\n\n`;
+    
+    content += `**Recommended Learning Schedule (${assessment.timeCommitment})**:\n\n`;
+    content += `- **Week 1-2:** Focus on syntax and basic concepts\n`;
+    content += `- **Week 3-4:** Practice with functions and simple algorithms\n`;
+    content += `- **Week 5-6:** Build your first small project\n`;
+    content += `- **Week 7-8:** Review concepts and expand your project\n\n`;
+  } 
+  // Add intermediate-specific advice
+  else if (level === "intermediate") {
+    content += `**Advancing Your ${language} Skills**\n\n`;
+    content += `As an intermediate developer, focus on deeper concepts and building more complex applications:\n\n`;
+    content += `1. **Advanced programming concepts** - Dive into OOP, functional programming, and design patterns\n`;
+    content += `2. **Data structures and algorithms** - Learn efficient ways to organize and process data\n`;
+    content += `3. **Build more complex projects** - Create applications that solve real-world problems\n`;
+    content += `4. **Explore frameworks and libraries** - Learn industry-standard tools for ${language}\n\n`;
+    
+    content += `**Recommended Learning Schedule (${assessment.timeCommitment})**:\n\n`;
+    content += `- **Week 1-2:** Study advanced programming concepts\n`;
+    content += `- **Week 3-4:** Practice with data structures and algorithms\n`;
+    content += `- **Week 5-8:** Build a comprehensive project using frameworks/libraries\n\n`;
+  }
+  // Add advanced-specific advice
+  else {
+    content += `**Mastering ${language} and Software Engineering**\n\n`;
+    content += `As an advanced developer, focus on mastery, optimization, and specialized areas:\n\n`;
+    content += `1. **Software architecture** - Design scalable, maintainable systems\n`;
+    content += `2. **Performance optimization** - Fine-tune your code for efficiency\n`;
+    content += `3. **Specialized domains** - Explore areas like AI/ML, security, or cloud computing\n`;
+    content += `4. **Contribute to open source** - Share your expertise with the community\n\n`;
+    
+    content += `**Recommended Learning Schedule (${assessment.timeCommitment})**:\n\n`;
+    content += `- **Week 1-2:** Study software architecture patterns\n`;
+    content += `- **Week 3-4:** Practice optimization techniques\n`;
+    content += `- **Week 5-8:** Develop an advanced project in your specialized domain\n\n`;
+  }
+  
+  // Add learning style recommendations
+  content += `### Learning Style Recommendations\n\n`;
+  if (assessment.learningStyle.toLowerCase().includes("visual")) {
+    content += `Since you prefer visual learning, we recommend:\n\n`;
+    content += `- Video tutorials and courses with demonstrations\n`;
+    content += `- Diagrams and flowcharts for conceptual understanding\n`;
+    content += `- Coding sessions with highlighted syntax\n`;
+    content += `- Visual debugging tools\n\n`;
+  } else if (assessment.learningStyle.toLowerCase().includes("reading")) {
+    content += `Since you prefer learning through reading, we recommend:\n\n`;
+    content += `- Comprehensive documentation and books\n`;
+    content += `- In-depth articles and tutorials\n`;
+    content += `- Code analysis with detailed comments\n`;
+    content += `- Written guides and best practices\n\n`;
+  } else if (assessment.learningStyle.toLowerCase().includes("interactive") || assessment.learningStyle.toLowerCase().includes("hands-on")) {
+    content += `Since you prefer hands-on/interactive learning, we recommend:\n\n`;
+    content += `- Coding challenges and exercises\n`;
+    content += `- Project-based learning\n`;
+    content += `- Interactive tutorials and coding playgrounds\n`;
+    content += `- Pair programming or coding meetups\n\n`;
+  } else {
+    content += `Based on your learning style, we recommend:\n\n`;
+    content += `- A mix of resources (videos, documentation, challenges)\n`;
+    content += `- Regular practice with coding exercises\n`;
+    content += `- Building projects that match your interests\n`;
+    content += `- Consistent review of concepts\n\n`;
+  }
+  
+  content += `### Next Steps\n\n`;
+  content += `1. Explore the recommended resources in the dashboard\n`;
+  content += `2. Set up a consistent study schedule based on your ${assessment.timeCommitment.toLowerCase()} availability\n`;
+  content += `3. Track your progress through the skills listed below\n`;
+  content += `4. Build projects that align with your goals in ${assessment.learningGoal}\n\n`;
+  
+  content += `Remember, consistent practice is key to improving your programming skills. Good luck on your coding journey!`;
 
   // Create a code example based on the language
   let codeExample = {
@@ -208,34 +286,156 @@ public class LearningTracker {
 // as you learn more about the language!`;
   }
 
-  // Create fallback resources
-  const resources = [
-    {
-      type: "course",
-      title: `${language} Fundamentals`,
-      description: `Learn the basics of ${language} with hands-on exercises`,
-      level: level === "beginner" ? "Beginner" : level === "intermediate" ? "Intermediate" : "Advanced",
-      duration: "20 hours",
-      link: `https://www.freecodecamp.org/`,
-      imageUrl: "https://cdn.iconscout.com/icon/free/png-256/free-code-280-460136.png"
-    },
-    {
-      type: "documentation",
-      title: `${language} Official Documentation`,
-      description: `Complete reference guide for ${language}`,
-      link: "https://developer.mozilla.org/",
-      imageUrl: "https://cdn.iconscout.com/icon/free/png-256/free-document-1767563-1502550.png"
-    },
-    {
-      type: "challenge",
-      title: "Coding Challenges",
-      description: "Practice your skills with interactive challenges",
-      level: level === "beginner" ? "Beginner" : level === "intermediate" ? "Intermediate" : "Advanced",
-      duration: "Self-paced",
-      link: "https://exercism.org/",
-      imageUrl: "https://cdn.iconscout.com/icon/free/png-256/free-challenge-1817231-1537877.png"
-    }
-  ];
+  // Create specific, high-quality fallback resources based on language and level
+  let resources = [];
+  
+  // Language-specific resource recommendations
+  if (language === "JavaScript") {
+    resources = [
+      {
+        type: "course",
+        title: "JavaScript - The Complete Guide",
+        description: "Comprehensive JavaScript course covering fundamentals to advanced concepts",
+        level: level === "beginner" ? "Beginner" : level === "intermediate" ? "Intermediate" : "Advanced",
+        duration: "40 hours",
+        link: "https://www.udemy.com/course/javascript-the-complete-guide-2020-beginner-advanced/",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/240px-JavaScript-logo.png"
+      },
+      {
+        type: "video",
+        title: "JavaScript Crash Course For Beginners",
+        description: "Quick introduction to JavaScript fundamentals with practical examples",
+        level: "Beginner",
+        duration: "1.5 hours",
+        link: "https://www.youtube.com/watch?v=hdI2bqOjy3c",
+        imageUrl: "https://i.ytimg.com/vi/hdI2bqOjy3c/hqdefault.jpg"
+      },
+      {
+        type: "documentation",
+        title: "MDN JavaScript Guide, JavaScript Info, W3Schools JavaScript",
+        description: "Official JavaScript reference, In-depth JavaScript tutorials, Simple JavaScript examples",
+        link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+      },
+      {
+        type: "challenge",
+        title: "JavaScript 30",
+        description: "Build 30 things in 30 days with vanilla JavaScript",
+        level: "Intermediate",
+        duration: "30 days",
+        link: "https://javascript30.com/",
+        imageUrl: "https://javascript30.com/images/JS3-social-share.png"
+      }
+    ];
+  } else if (language === "Python") {
+    resources = [
+      {
+        type: "course",
+        title: "Python for Everybody",
+        description: "Learn Python from scratch with Dr. Charles Severance",
+        level: "Beginner",
+        duration: "30 hours",
+        link: "https://www.coursera.org/specializations/python",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/240px-Python-logo-notext.svg.png"
+      },
+      {
+        type: "video",
+        title: "Python Tutorial - Python Full Course for Beginners",
+        description: "Comprehensive Python tutorial covering all the basics",
+        level: "Beginner",
+        duration: "4.5 hours",
+        link: "https://www.youtube.com/watch?v=_uQrJ0TkZlc",
+        imageUrl: "https://i.ytimg.com/vi/_uQrJ0TkZlc/hqdefault.jpg"
+      },
+      {
+        type: "documentation",
+        title: "Python.org Documentation, Real Python, W3Schools Python",
+        description: "Official Python documentation, Practical Python tutorials, Simple Python examples with exercises",
+        link: "https://docs.python.org/3/",
+      },
+      {
+        type: "challenge",
+        title: "Python Projects for Beginners",
+        description: "Build 10 real-world Python applications",
+        level: level === "beginner" ? "Beginner" : "Intermediate",
+        duration: "15 hours",
+        link: "https://www.youtube.com/watch?v=8ext9G7xspg",
+        imageUrl: "https://i.ytimg.com/vi/8ext9G7xspg/hqdefault.jpg"
+      }
+    ];
+  } else if (language === "Java") {
+    resources = [
+      {
+        type: "course",
+        title: "Java Programming Masterclass",
+        description: "Comprehensive Java course covering core concepts and advanced topics",
+        level: level === "beginner" ? "Beginner to Intermediate" : "Intermediate to Advanced",
+        duration: "80 hours",
+        link: "https://www.udemy.com/course/java-the-complete-java-developer-course/",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/182px-Java_programming_language_logo.svg.png"
+      },
+      {
+        type: "video",
+        title: "Java Tutorial for Beginners",
+        description: "Step-by-step Java tutorial for beginners",
+        level: "Beginner",
+        duration: "7 hours",
+        link: "https://www.youtube.com/watch?v=eIrMbAQSU34",
+        imageUrl: "https://i.ytimg.com/vi/eIrMbAQSU34/hqdefault.jpg"
+      },
+      {
+        type: "documentation",
+        title: "Oracle Java Tutorials, Baeldung, JavaTpoint",
+        description: "Official Java tutorials, In-depth Java articles, Simplified Java concepts with examples",
+        link: "https://docs.oracle.com/javase/tutorial/",
+      },
+      {
+        type: "challenge",
+        title: "Learn Java by Building Projects",
+        description: "Hands-on Java development with practical projects",
+        level: "Intermediate",
+        duration: "20 hours",
+        link: "https://www.codecademy.com/learn/learn-java",
+        imageUrl: "https://www.codecademy.com/resources/blog/content/images/2021/05/java-projects-for-beginners.png"
+      }
+    ];
+  } else {
+    // Default resources for other languages
+    resources = [
+      {
+        type: "course",
+        title: `${language} Comprehensive Course`,
+        description: `Complete ${language} course from fundamentals to advanced topics`,
+        level: level === "beginner" ? "Beginner" : level === "intermediate" ? "Intermediate" : "Advanced",
+        duration: "40 hours",
+        link: `https://www.freecodecamp.org/learn/`,
+        imageUrl: "https://cdn.iconscout.com/icon/free/png-256/free-code-280-460136.png"
+      },
+      {
+        type: "video",
+        title: `${language} Tutorial for Beginners`,
+        description: `Learn ${language} basics through video tutorials`,
+        level: "Beginner",
+        duration: "3 hours",
+        link: "https://www.youtube.com/c/programmingwithmosh",
+        imageUrl: "https://yt3.googleusercontent.com/ytc/APkrFKY455xp16s2AIHalRjK60zas-DitxAHmRjQsQ5J=s176-c-k-c0x00ffffff-no-rj"
+      },
+      {
+        type: "documentation",
+        title: `${language} Official Documentation, W3Schools ${language}, TutorialsPoint`,
+        description: `Official ${language} reference, Simple ${language} tutorials, Comprehensive ${language} guides`,
+        link: "https://www.w3schools.com/",
+      },
+      {
+        type: "challenge",
+        title: "Coding Challenges and Exercises",
+        description: "Improve your programming skills with interactive exercises",
+        level: level === "beginner" ? "Beginner" : level === "intermediate" ? "Intermediate" : "Advanced",
+        duration: "Self-paced",
+        link: "https://exercism.org/",
+        imageUrl: "https://cdn.iconscout.com/icon/free/png-256/free-challenge-1817231-1537877.png"
+      }
+    ];
+  }
 
   // Create fallback progress metrics
   const progress = [

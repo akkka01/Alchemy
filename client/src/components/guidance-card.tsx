@@ -38,24 +38,80 @@ export function GuidanceCard({ guidance }: GuidanceCardProps) {
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  // Function to convert markdown-style lists to HTML
+  // Function to convert markdown-style formatting to HTML
   const formatContent = (content: string) => {
     const paragraphs = content.split('\n\n');
     
     return paragraphs.map((paragraph, idx) => {
+      // Check if this is a heading
+      if (paragraph.trim().startsWith('###')) {
+        const heading = paragraph.replace(/^###\s*/, '').trim();
+        return (
+          <h3 key={idx} className="text-lg font-semibold text-gray-900 mt-6 mb-2">
+            {heading}
+          </h3>
+        );
+      }
+      
+      // Check if this is a subheading
+      if (paragraph.trim().startsWith('##')) {
+        const heading = paragraph.replace(/^##\s*/, '').trim();
+        return (
+          <h2 key={idx} className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+            {heading}
+          </h2>
+        );
+      }
+      
       // Check if this is a list
-      if (paragraph.trim().startsWith('- ')) {
+      if (paragraph.trim().startsWith('- ') || paragraph.includes('\n- ')) {
         const listItems = paragraph
           .split('\n')
           .filter(line => line.trim())
-          .map(line => line.replace(/^- /, ''));
+          .map(line => {
+            if (line.trim().startsWith('- ')) {
+              return line.replace(/^-\s*/, '');
+            }
+            return line;
+          });
           
         return (
-          <ul key={idx} className="list-disc pl-5 space-y-1 mt-2">
-            {listItems.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
+          <ul key={idx} className="list-disc pl-5 space-y-1 mt-3 mb-3">
+            {listItems.map((item, i) => {
+              const formattedItem = item.replace(
+                /\*\*(.*?)\*\*/g, 
+                '<strong>$1</strong>'
+              );
+              return (
+                <li key={i} dangerouslySetInnerHTML={{ __html: formattedItem }} />
+              );
+            })}
           </ul>
+        );
+      }
+      
+      // Check if this is a numbered list
+      if (paragraph.trim().match(/^\d+\./) || paragraph.match(/\n\d+\./)) {
+        const listItems = paragraph
+          .split('\n')
+          .filter(line => line.trim())
+          .map(line => {
+            // Remove the number and dot at the beginning of the line
+            return line.replace(/^\d+\.\s*/, '');
+          });
+          
+        return (
+          <ol key={idx} className="list-decimal pl-5 space-y-1 mt-3 mb-3">
+            {listItems.map((item, i) => {
+              const formattedItem = item.replace(
+                /\*\*(.*?)\*\*/g, 
+                '<strong>$1</strong>'
+              );
+              return (
+                <li key={i} dangerouslySetInnerHTML={{ __html: formattedItem }} />
+              );
+            })}
+          </ol>
         );
       }
       
@@ -68,7 +124,7 @@ export function GuidanceCard({ guidance }: GuidanceCardProps) {
       return (
         <p 
           key={idx} 
-          className={idx > 0 ? "mt-2" : ""} 
+          className={idx > 0 ? "mt-3 mb-3" : ""} 
           dangerouslySetInnerHTML={{ __html: formattedParagraph }}
         />
       );
@@ -108,7 +164,7 @@ export function GuidanceCard({ guidance }: GuidanceCardProps) {
                 <div className="flex items-center justify-between px-4 py-2 bg-gray-900">
                   <span className="text-xs text-gray-400">{guidance.codeExample.title}</span>
                   <button 
-                    onClick={() => copyToClipboard(guidance.codeExample.code)}
+                    onClick={() => guidance.codeExample?.code && copyToClipboard(guidance.codeExample.code)}
                     className="text-xs text-gray-400 hover:text-gray-300"
                   >
                     <i className={`${isCopied ? 'ri-check-line' : 'ri-file-copy-line'}`}></i>
