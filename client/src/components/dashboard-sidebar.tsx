@@ -17,26 +17,42 @@ export function DashboardSidebar({ user, onLogout }: DashboardSidebarProps) {
         </div>
       </div>
       <nav className="flex-1 px-2 py-4 space-y-1">
-        <a href="#" className="group flex items-center px-3 py-2 text-sm font-medium rounded-md bg-primary-50 text-primary-700">
+        <a 
+          href="/" 
+          onClick={(e) => { e.preventDefault(); window.location.href = '/'; }} 
+          className="group flex items-center px-3 py-2 text-sm font-medium rounded-md bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+        >
           <i className="ri-dashboard-line mr-3 text-primary-500"></i>
           Dashboard
         </a>
-        <a href="#" className="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
-          <i className="ri-book-open-line mr-3 text-gray-500"></i>
+        <button 
+          onClick={() => window.alert('Learning Path feature coming soon!')} 
+          className="w-full text-left group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+        >
+          <i className="ri-book-open-line mr-3 text-gray-500 group-hover:text-primary-500"></i>
           Learning Path
-        </a>
-        <a href="#" className="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
-          <i className="ri-code-s-slash-line mr-3 text-gray-500"></i>
+        </button>
+        <button 
+          onClick={() => window.alert('Practice Exercises feature coming soon!')} 
+          className="w-full text-left group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+        >
+          <i className="ri-code-s-slash-line mr-3 text-gray-500 group-hover:text-primary-500"></i>
           Practice Exercises
-        </a>
-        <a href="#" className="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
-          <i className="ri-archive-line mr-3 text-gray-500"></i>
+        </button>
+        <button 
+          onClick={() => document.getElementById('resources-section')?.scrollIntoView({ behavior: 'smooth' })} 
+          className="w-full text-left group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+        >
+          <i className="ri-archive-line mr-3 text-gray-500 group-hover:text-primary-500"></i>
           Resources
-        </a>
-        <a href="#" className="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
-          <i className="ri-settings-line mr-3 text-gray-500"></i>
+        </button>
+        <button 
+          onClick={() => window.alert('Settings feature coming soon!')} 
+          className="w-full text-left group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+        >
+          <i className="ri-settings-line mr-3 text-gray-500 group-hover:text-primary-500"></i>
           Settings
-        </a>
+        </button>
       </nav>
       <div className="p-4 border-t border-gray-200">
         <div className="flex items-center">

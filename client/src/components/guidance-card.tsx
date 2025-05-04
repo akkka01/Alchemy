@@ -132,7 +132,7 @@ export function GuidanceCard({ guidance }: GuidanceCardProps) {
   };
 
   return (
-    <Card className="shadow-md rounded-lg overflow-hidden mb-6">
+    <Card className="shadow-lg hover:shadow-xl transition-all rounded-lg overflow-hidden mb-6 border-t-4 border-t-primary-500">
       <div className="p-5 border-b border-gray-200 flex justify-between items-center">
         <h2 className="text-lg font-semibold text-gray-900">Your Personalized Guidance</h2>
         <Button 

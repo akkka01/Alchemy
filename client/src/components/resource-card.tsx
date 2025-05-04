@@ -57,7 +57,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
   };
 
   return (
-    <Card className="shadow-md rounded-lg overflow-hidden">
+    <Card className="shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden border-t-2 border-t-secondary-400">
       <div className="p-4 border-b border-gray-200">
         <h3 className="font-medium text-gray-900">
           {resource.type === 'course' ? 'Recommended Course' : 

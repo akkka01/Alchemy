@@ -88,8 +88,8 @@ export default function HomePage() {
         <header className="md:hidden bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 py-3 flex justify-between items-center">
             <div className="flex items-center">
-              <i className="ri-code-box-line text-2xl text-primary-500 mr-2"></i>
-              <h1 className="text-xl font-semibold text-gray-900">CodeMentor AI</h1>
+              <i className="ri-flask-fill text-3xl text-primary-600 mr-2"></i>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text">ALCHEMY</h1>
             </div>
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
@@ -104,26 +104,42 @@ export default function HomePage() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white absolute inset-x-0 top-14 z-50 border-b border-gray-200 transition">
             <nav className="px-2 py-3 space-y-1">
-              <a href="#" className="block px-3 py-2 text-sm font-medium rounded-md bg-primary-50 text-primary-700">
+              <a 
+                href="/" 
+                onClick={(e) => { e.preventDefault(); window.location.href = '/'; setMobileMenuOpen(false); }} 
+                className="block px-3 py-2 text-sm font-medium rounded-md bg-primary-50 text-primary-700 hover:bg-primary-100 transition-colors"
+              >
                 <i className="ri-dashboard-line mr-3 text-primary-500"></i>
                 Dashboard
               </a>
-              <a href="#" className="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
+              <button 
+                onClick={() => { window.alert('Learning Path feature coming soon!'); setMobileMenuOpen(false); }} 
+                className="w-full text-left block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+              >
                 <i className="ri-book-open-line mr-3 text-gray-500"></i>
                 Learning Path
-              </a>
-              <a href="#" className="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
+              </button>
+              <button 
+                onClick={() => { window.alert('Practice Exercises feature coming soon!'); setMobileMenuOpen(false); }} 
+                className="w-full text-left block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+              >
                 <i className="ri-code-s-slash-line mr-3 text-gray-500"></i>
                 Practice Exercises
-              </a>
-              <a href="#" className="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
+              </button>
+              <button 
+                onClick={() => { document.getElementById('resources-section')?.scrollIntoView({ behavior: 'smooth' }); setMobileMenuOpen(false); }} 
+                className="w-full text-left block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+              >
                 <i className="ri-archive-line mr-3 text-gray-500"></i>
                 Resources
-              </a>
-              <a href="#" className="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50">
+              </button>
+              <button 
+                onClick={() => { window.alert('Settings feature coming soon!'); setMobileMenuOpen(false); }} 
+                className="w-full text-left block px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
+              >
                 <i className="ri-settings-line mr-3 text-gray-500"></i>
                 Settings
-              </a>
+              </button>
               <div className="pt-2 mt-2 border-t border-gray-200">
                 <div className="flex items-center px-3 py-2">
                   <div className="flex-shrink-0">
@@ -155,9 +171,16 @@ export default function HomePage() {
           ) : (
             <div className="max-w-7xl mx-auto">
               {/* Welcome Section */}
-              <div className="mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Welcome back, {user.username}!</h1>
-                <p className="mt-1 text-gray-600">Here's your personalized coding guidance and resources.</p>
+              <div className="mb-8 bg-white p-6 rounded-lg shadow-md border-l-4 border-primary-500">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-gradient-to-br from-primary-500 to-accent-500 p-3 rounded-lg shadow-lg mr-4">
+                    <i className="ri-flask-line text-3xl text-white"></i>
+                  </div>
+                  <div>
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 text-transparent bg-clip-text">Welcome back, {user.username}!</h1>
+                    <p className="mt-2 text-gray-600 text-lg">Here's your personalized coding journey with <span className="font-semibold text-primary-600">ALCHEMY</span>.</p>
+                  </div>
+                </div>
               </div>
 
               {/* AI Guidance */}
@@ -187,6 +210,7 @@ export default function HomePage() {
               )}
 
               {/* Resource Recommendations */}
+              <div id="resources-section"></div>
               {resources && resources.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   {resources.map((resource, index) => (
