@@ -89,7 +89,7 @@ export default function HomePage() {
           <div className="px-4 py-3 flex justify-between items-center">
             <div className="flex items-center">
               <i className="ri-flask-fill text-3xl text-primary-600 mr-2"></i>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text">ALCHEMY</h1>
+              <h1 className="text-2xl font-bold text-primary-600">ALCHEMY</h1>
             </div>
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
@@ -177,7 +177,7 @@ export default function HomePage() {
                     <i className="ri-flask-line text-3xl text-white"></i>
                   </div>
                   <div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 text-transparent bg-clip-text">Welcome back, {user.username}!</h1>
+                    <h1 className="text-3xl font-bold text-primary-600">Welcome back, {user.username}!</h1>
                     <p className="mt-2 text-gray-600 text-lg">Here's your personalized coding journey with <span className="font-semibold text-primary-600">ALCHEMY</span>.</p>
                   </div>
                 </div>

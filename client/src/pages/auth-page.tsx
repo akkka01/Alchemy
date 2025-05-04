@@ -74,7 +74,7 @@ export default function AuthPage() {
                   <i className="ri-flask-fill text-4xl text-white"></i>
                 </div>
               </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 text-transparent bg-clip-text mb-2">ALCHEMY</h1>
+              <h1 className="text-3xl font-bold text-primary-600 mb-2">ALCHEMY</h1>
               <p className="text-gray-600 text-lg">Transform your coding journey</p>
             </div>
 
@@ -139,7 +139,7 @@ export default function AuthPage() {
                   />
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 transition-all duration-300" 
+                    className="w-full bg-primary-600 hover:bg-primary-700 transition-all duration-300" 
                     disabled={loginMutation.isPending}
                   >
                     {loginMutation.isPending ? (
@@ -190,7 +190,7 @@ export default function AuthPage() {
                   />
                   <Button 
                     type="submit" 
-                    className="w-full bg-gradient-to-r from-primary-600 to-accent-600 hover:from-primary-700 hover:to-accent-700 transition-all duration-300" 
+                    className="w-full bg-primary-600 hover:bg-primary-700 transition-all duration-300" 
                     disabled={registerMutation.isPending}
                   >
                     {registerMutation.isPending ? (

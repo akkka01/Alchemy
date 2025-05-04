@@ -12,7 +12,7 @@ export function DashboardSidebar({ user, onLogout }: DashboardSidebarProps) {
         <div className="flex items-center justify-center">
           <div className="flex items-center p-2">
             <i className="ri-flask-fill text-3xl text-primary-600 mr-2"></i>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text">ALCHEMY</h1>
+            <h1 className="text-2xl font-bold text-primary-600">ALCHEMY</h1>
           </div>
         </div>
       </div>
