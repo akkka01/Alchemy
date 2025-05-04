@@ -50,8 +50,38 @@ export default function AssessmentPage() {
 
   const submitAssessmentMutation = useMutation({
     mutationFn: async (data: AssessmentData) => {
-      const res = await apiRequest("POST", "/api/assessment", data);
-      return res.json();
+      try {
+        // Client-side validations
+        if (!data.experienceLevel) {
+          throw new Error("Please select your experience level");
+        }
+        if (data.languages.length === 0) {
+          throw new Error("Please select at least one programming language");
+        }
+        if (!data.learningGoal) {
+          throw new Error("Please select your learning goal");
+        }
+        if (!data.learningStyle) {
+          throw new Error("Please select your preferred learning style");
+        }
+        if (!data.timeCommitment) {
+          throw new Error("Please select your time commitment");
+        }
+
+        const res = await apiRequest("POST", "/api/assessment", data);
+        const responseData = await res.json();
+        
+        if (!res.ok) {
+          throw new Error(responseData.error || "Failed to submit assessment");
+        }
+        
+        return responseData;
+      } catch (err) {
+        if (err instanceof Error) {
+          throw err;
+        }
+        throw new Error("An unexpected error occurred");
+      }
     },
     onSuccess: () => {
       toast({

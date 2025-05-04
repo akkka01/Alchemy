@@ -47,11 +47,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: req.user.id,
       });
       
-      // Store the assessment
+      // Store the assessment - this should succeed even if guidance generation fails
       const assessment = await storage.createOrUpdateAssessment(validatedData);
       
-      // Generate initial guidance
-      await generateGuidance(req.user.id, assessment);
+      try {
+        // Generate initial guidance - this may fail if OpenAI API has issues
+        await generateGuidance(req.user.id, assessment);
+      } catch (guidanceError) {
+        // Log the guidance error but don't fail the assessment submission
+        console.error("Error generating guidance, but assessment was saved:", guidanceError);
+      }
       
       return res.status(201).json(assessment);
     } catch (error) {
